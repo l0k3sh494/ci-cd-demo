@@ -55,11 +55,11 @@ pipeline {
                     script {
                         sh '''
                             echo "🔑 Logging into ECR..."
-                            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+                            /opt/homebrew/bin/aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 
                             echo "📦 Ensuring ECR repo exists..."
-                            aws ecr describe-repositories --repository-names $ECR_REPO_NAME --region $AWS_REGION >/dev/null 2>&1 || \
-                            aws ecr create-repository --repository-name $ECR_REPO_NAME --region $AWS_REGION
+                            /opt/homebrew/bin/aws ecr describe-repositories --repository-names $ECR_REPO_NAME --region $AWS_REGION >/dev/null 2>&1 || \
+                            /opt/homebrew/bin/aws ecr create-repository --repository-name $ECR_REPO_NAME --region $AWS_REGION
 
                             echo "🏷️ Tagging and pushing image..."
                             docker tag ${ECR_REPO_NAME}:${IMAGE_TAG} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${ECR_REPO_NAME}:${IMAGE_TAG}
