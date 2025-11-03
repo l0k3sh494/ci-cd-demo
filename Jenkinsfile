@@ -76,7 +76,7 @@ pipeline {
                 sshagent(['ec2-deploy-key']) {
                     sh '''
                         echo "Connecting to EC2 and redeploying app..."
-                        ssh -o StrictHostKeyChecking=no ubuntu@52.204.65.236 << 'EOF'
+                        ssh -o StrictHostKeyChecking=no ubuntu@52.204.65.236 << EOF
                             set -e
                             echo "🔑 Logging in to ECR..."
                             aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
